@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpFragment"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".fragments.SignUpFragment">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -19,8 +19,8 @@
             android:id="@+id/userAvatarIv"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:layout_marginBottom="10dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/image_gallery" />
 
         <TextView
@@ -30,8 +30,8 @@
             android:gravity="center"
             android:paddingBottom="10dp"
             android:text="@string/upload_title_txt"
-            android:textSize="16sp"
             android:textColor="@color/black"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
 
@@ -40,8 +40,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="@string/fullname_edt"
             android:background="@drawable/input"
+            android:hint="@string/fullname_edt"
             android:inputType="textEmailAddress"
             android:padding="10dp" />
 
@@ -50,8 +50,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="@string/email_edt"
             android:background="@drawable/input"
+            android:hint="@string/email_edt"
             android:padding="10dp" />
 
         <EditText
@@ -59,8 +59,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="@string/password_edt"
             android:background="@drawable/input"
+            android:hint="@string/password_edt"
             android:inputType="textPassword"
             android:padding="10dp" />
 
@@ -69,10 +69,20 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="@string/confirm_password_edt"
             android:background="@drawable/input"
+            android:hint="@string/confirm_password_edt"
             android:inputType="textPassword"
             android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/detailErrorMessageTv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:text="@string/please_enter_your_details"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/registerBtn"
@@ -82,6 +92,18 @@
             android:background="@drawable/login_btn"
             android:text="@string/register_btn"
             android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/loginTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp"
+            android:text="Already have account? Login"
+            android:textSize="16sp"
+            android:textColor="@color/main"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
