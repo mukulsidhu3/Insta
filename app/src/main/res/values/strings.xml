@@ -10,5 +10,6 @@
     <string name="fullname_edt">Full Name</string>
     <string name="upload_post_txt">Upload your post or video</string>
     <string name="create_post_btn">Create a post</string>
-
+    <string name="login_btn">Login</string>
+    <string name="register_txt">Create New Account</string>
 </resources>
