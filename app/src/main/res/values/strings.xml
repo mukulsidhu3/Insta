@@ -14,4 +14,10 @@
     <string name="register_txt">Create New Account</string>
     <string name="please_enter_your_details">Please enter your details</string>
     <string name="logo">logo</string>
+    <string name="profile_pic">profile pic</string>
+    <string name="_0">0</string>
+    <string name="posts">Posts</string>
+    <string name="followers">Followers</string>
+    <string name="followings">Followings</string>
+    <string name="edit_profile">Edit profile</string>
 </resources>

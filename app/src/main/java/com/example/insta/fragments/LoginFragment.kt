@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.insta.R
 import com.example.insta.databinding.FragmentLoginBinding
 import com.example.insta.util.InstaApplication
+import com.example.insta.util.ShowMessage.Companion.showMessage
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
@@ -37,15 +38,39 @@ class LoginFragment : Fragment() {
             val pswd = binding.passwordEdt.text.toString()
 
             //sign in
-            auth.signInWithEmailAndPassword(email, pswd)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Toast.makeText(requireContext(), "Login success", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_loginFragment_to_mainContentFragment)
-                    } else {
-                        Toast.makeText(requireContext(), "Login Fail", Toast.LENGTH_SHORT).show()
+            if (
+                email.isNotEmpty() &&
+                pswd.isNotEmpty()
+            ) {
+
+                auth.signInWithEmailAndPassword(email, pswd)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            Toast.makeText(requireContext(), "Login success", Toast.LENGTH_SHORT)
+                                .show()
+                            findNavController().navigate(R.id.action_loginFragment_to_mainContentFragment)
+                        } else {
+                            if (it.exception.toString().contains("AuthEmail")) {
+                                showMessage(requireContext(), "Please enter valid email")
+                            } else if (it.exception.toString().contains("AuthInvalidCredential")) {
+                                binding.passwordEdt.error = "Incorrect password"
+                                showMessage(requireContext(), "Incorrect password")
+                            } else if (it.exception.toString().contains("AuthInvalidUser")) {
+                                showMessage(requireContext(), "User Doesn't exist")
+                            } else {
+                                showMessage(requireContext(), "Please check your credential")
+                            }
+                        }
                     }
-                }
+
+            } else if (email.isEmpty() && pswd.isEmpty()) {
+                binding.emailEdt.error = "Please enter your email"
+                binding.passwordEdt.error = "Please enter your password"
+            } else if (email.isEmpty()) {
+                binding.emailEdt.error = "Please enter your email"
+            } else {
+                binding.passwordEdt.error = "Please enter your password"
+            }
         }
 
         binding.registerTxt.setOnClickListener {

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.insta.R
 import com.example.insta.databinding.FragmentSignUpBinding
 import com.example.insta.util.InstaApplication
+import com.example.insta.util.ShowMessage.Companion.showMessage
 import com.example.insta.util.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -72,7 +73,12 @@ class SignUpFragment : Fragment() {
                 cPswd.isNotEmpty() &&
                 pswd == cPswd
             ) {
-                createUser(imageUri, fullName, email, pswd)
+                if (isValidEmail(email)) {
+                    createUser(imageUri, fullName, email, pswd)
+                } else {
+                    Toast.makeText(requireContext(), "please enter valid email", Toast.LENGTH_SHORT)
+                        .show()
+                }
             } else if (imageUri == null) {
                 binding.detailErrorMessageTv.visibility = View.VISIBLE
                 errorMsg = "please upload image"
@@ -124,8 +130,11 @@ class SignUpFragment : Fragment() {
 
                                     val user = User(
                                         email,
+                                        0,
+                                        0,
                                         fullName,
-                                        downloadProfileImage.result.toString()
+                                        downloadProfileImage.result.toString(),
+                                        listOf("")
                                     )
 
                                     // saving user to the firebase database
@@ -135,17 +144,23 @@ class SignUpFragment : Fragment() {
                                 }
                                 auth.signOut()
 
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Account Created",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                showMessage(requireContext(), "Account Created")
 
                                 findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
                             }
                         }
                     }
+                } else {
+                    if (createUser.exception.toString().contains("AuthInvalidCredentials")) {
+                        showMessage(requireContext(), "please enter valid mail")
+                    } else {
+                        showMessage(requireContext(), "user Already exit")
+                    }
                 }
             }
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }
