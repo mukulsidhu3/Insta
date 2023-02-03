@@ -9,7 +9,10 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.insta.R
 import com.example.insta.databinding.FragmentMainContentBinding
 import com.example.insta.util.InstaApplication
@@ -19,6 +22,8 @@ class MainContentFragment : Fragment(), MenuProvider {
 
     private lateinit var binding: FragmentMainContentBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var navHostFragment: NavHostFragment
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +44,18 @@ class MainContentFragment : Fragment(), MenuProvider {
 
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navHostFragment =
+            childFragmentManager.findFragmentById(R.id.nestedFragmentConV) as NavHostFragment
+
+        navController = navHostFragment.navController
+
+        setupWithNavController(binding.bottomNavV, navController)
+        binding.bottomNavV
+    }
+
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
     }
